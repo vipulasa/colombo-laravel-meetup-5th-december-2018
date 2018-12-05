@@ -17,7 +17,6 @@ class Role
     public function handle($request, Closure $next, $guard = null)
     {
 
-
         // check if the user is logged in
         if ($request->user()) {
 

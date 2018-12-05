@@ -16,7 +16,7 @@ class PostController extends Controller
         //   'role:administrator'
         // ]);
 
-         $this->authorizeResource(Post::class);
+         // $this->authorizeResource(Post::class);
     }
 
     /**
