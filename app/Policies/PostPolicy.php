@@ -43,6 +43,9 @@ class PostPolicy
      */
     public function update(User $user, Post $post)
     {
+        if ($user->id != $post->created_user_id) {
+            return false;
+        }
         return true;
     }
 

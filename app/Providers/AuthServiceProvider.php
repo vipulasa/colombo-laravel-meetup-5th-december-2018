@@ -31,15 +31,28 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('view-hidden', function ($user) {
 
             // check for the user condition and return true
-            return false;
+            return true;
 
         });
 
-        Gate::define('show-template-content', function ($user) {
+        Gate::define('view-auth-content', function ($user) {
 
             // check for the user condition
             return true;
 
+        });
+
+        Gate::define('view-administration', function ($user) {
+
+            // check if the user is logged in
+            if ($user) {
+
+                // check if the user has a role and the guard role is the same
+                if ($user->role === 'administrator') {
+                    return true;
+                }
+            }
+            return false;
         });
 
     }

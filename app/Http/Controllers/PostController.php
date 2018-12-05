@@ -10,10 +10,13 @@ class PostController extends Controller
 
     public function __construct()
     {
-        $this->middleware([
-            'auth',
-            'role:administrator'
-        ]);
+
+        // $this->middleware([
+        //   'auth',
+        //   'role:administrator'
+        // ]);
+
+         $this->authorizeResource(Post::class);
     }
 
     /**
@@ -36,11 +39,12 @@ class PostController extends Controller
     public function create()
     {
 
+        return view('post.form');
 
         if (auth()->user()->can('create', new Post())) {
-            $this->middleware('role:editor');
 
             return view('post.form');
+
         }
 
         abort(403, 'Sorry you do not have permission to create a post');
@@ -66,7 +70,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return view('post.show', ['post' => $post]);
     }
 
     /**
@@ -77,7 +81,13 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        if (auth()->user()->can('update', $post)) {
+
+            return view('post.form', ['post' => $post]);
+
+        }
+
+        abort(403, 'Sorry this post can be only edited by the user who created it');
     }
 
     /**
